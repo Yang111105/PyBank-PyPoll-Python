@@ -69,9 +69,11 @@ with open(budget_csv, newline='') as csvfile:
 
 #-------------------------Create text file export------------------------------------------------------
 # Set variable for output text file
-path_dir = os.getcwd()
-directory = "analysis"
-os.mkdir(os.path.join(path_dir, directory))
+
+# below three line codes were used to create the intial "analysis" folder
+# path_dir = os.getcwd()
+# directory = "analysis"
+# os.mkdir(os.path.join(path_dir, directory))
 output_summary_file = os.path.join("analysis","output_budget_summary.txt")
 
 #  Open the output file

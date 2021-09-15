@@ -4,7 +4,7 @@ import csv
 election_csv = os.path.join("Resources", "election_data.csv")
 
 # Create lists to store election_data
-vote_list = []              # List for every vote     
+vote_list = [] # List for every vote     
 
 # Read election data and store in new lists created
 with open(election_csv, newline='') as csvfile:
@@ -39,9 +39,11 @@ with open(election_csv, newline='') as csvfile:
 
 
 #--------------Create text output file to export---------------------------------------------------------------- 
-path_dir = os.getcwd()
-directory = "analysis"
-os.mkdir(os.path.join(path_dir, directory))
+
+# Below lines were used to create the intial "analysis" folder 
+# path_dir = os.getcwd()
+# directory = "analysis"
+# os.mkdir(os.path.join(path_dir, directory))
 output_summary_file = os.path.join("analysis","output_election_summary.txt")
 
 with open(output_summary_file, "w", newline="") as datafile:
@@ -56,4 +58,4 @@ with open(output_summary_file, "w", newline="") as datafile:
         percent = round(count/total_votes*100,3)
         datafile.write(f'{candidate} {"%.3f"%percent}% ({count})\n') 
     
-    datafile.write(f'\n---------------------------\nWinner: {winner}\n---------------------------')
+    datafile.write(f'---------------------------\nWinner: {winner}\n---------------------------')
