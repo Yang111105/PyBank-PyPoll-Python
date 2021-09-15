@@ -69,7 +69,10 @@ with open(budget_csv, newline='') as csvfile:
 
 #-------------------------Create text file export------------------------------------------------------
 # Set variable for output text file
-output_summary_file = os.path.join("output_budget_summary.txt")
+path_dir = os.getcwd()
+directory = "analysis"
+os.mkdir(os.path.join(path_dir, directory))
+output_summary_file = os.path.join("analysis","output_budget_summary.txt")
 
 #  Open the output file
 with open(output_summary_file, "w", newline="") as datafile:

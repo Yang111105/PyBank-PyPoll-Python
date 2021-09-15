@@ -39,7 +39,10 @@ with open(election_csv, newline='') as csvfile:
 
 
 #--------------Create text output file to export---------------------------------------------------------------- 
-output_summary_file = os.path.join("output_election_summary.txt")
+path_dir = os.getcwd()
+directory = "analysis"
+os.mkdir(os.path.join(path_dir, directory))
+output_summary_file = os.path.join("analysis","output_election_summary.txt")
 
 with open(output_summary_file, "w", newline="") as datafile:
 
