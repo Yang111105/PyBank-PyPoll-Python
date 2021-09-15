@@ -33,7 +33,7 @@ with open(election_csv, newline='') as csvfile:
     # Loop through the dict and print vote details for each candidates. Percentage is calculated here
     for candidate,count in sorted(candidate_count.items(),key=lambda x: x[1], reverse=True):
         percent = round(count/total_votes*100,3)
-        print(f'{candidate} {"%.3f"%percent}% ({count})') 
+        print(f'{candidate}: {"%.3f"%percent}% ({count})') 
     
     print(f'--------------------------- \nWinner: {winner}\n---------------------------')
 
@@ -56,6 +56,6 @@ with open(output_summary_file, "w", newline="") as datafile:
 
     for candidate,count in sorted(candidate_count.items(),key=lambda x: x[1], reverse=True):
         percent = round(count/total_votes*100,3)
-        datafile.write(f'{candidate} {"%.3f"%percent}% ({count})\n') 
+        datafile.write(f'{candidate}: {"%.3f"%percent}% ({count})\n') 
     
     datafile.write(f'---------------------------\nWinner: {winner}\n---------------------------')
