@@ -1,60 +1,86 @@
 import os
 import csv
 
-budget_csv = os.path.join("..", "Resources", "budget_data.csv")
-print (budget_csv)
+budget_csv = os.path.join("Resources", "budget_data.csv")
+# print (budget_csv)
 
 # Lists to store budget_data
-mm_yy = []
-pnl = []
-pnl_change = []
+mm_yy = []      # List for dates
+pnl = []        # List for montly pnl
 
-# Read budget_data and store as new lists created
+# Read budget_data
 with open(budget_csv, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
-    for row in csvreader:
-        # Add date
-        mm_yy.append(row[0])
-
-        # Find out the total number of months in the list
-        total_months = len(mm_yy)
-        print(f'Total Months: {str(total_months)}')
+    csv_header = next(csvreader) 
  
-        # Add pnl
+    total_pnl=0 # Set initial total pnl value for calculation
+
+    # Loop through rows in csvreader
+    for row in csvreader:
+
+        # Add dates & pnl to lists
+        mm_yy.append(row[0])
         pnl.append(row[1])
-
+        
+         # Find out total number of months
+        total_months = len(mm_yy)
+        
         # Add up all P&L
-        net_pnl = 0
-        for pnl in len(pnl):
-            net_pnl += pnl 
+        total_pnl += int(row[1])    
 
-        print (f'Total: {float(net_pnl)}')
-
-
-        # Calculate pnl changes and store to a new list
-        for month in range (total_months):
-            monthly_change = pnl[month+1] - pnl[month]
-            pnl_change.append(monthly_change)
-            print(pnl_change)
+   
+    # Calculate monthly changes and find out the greatest increase/decrease
+    total_pnl_change = 0 # Set initial net pnl change value
+    greatest_increase = 0 # Set initial greatest pnl increase value
+    greatest_decrease = 0 # Set initial greatest pnl decrease value
 
 
-        # Find out the greatese increase
-        greatest_increase = pnl_change[0]
-        for month in range (total_months):
-            if (pnl_change[month+1] > greatest_increase):
-                greatest_increase = pnl_change[month+1]
+    # Loop through pnl list to calculate monthly changes and compare
+    for month in range(1, total_months):
         
-        greatest_increase_month = pnl_change.index(greatest_increase)
-  
-        print(f'Greatest Increase in Profits: {mm_yy[greatest_increase_month]} {greatest_increase}')
+        # Calculate monthly change
+        monthly_change = int(pnl[month]) - int(pnl[month-1])
+
+        # Calculate total pnl change
+        total_pnl_change += monthly_change
+
+        # Find out the greatese increase/decrease
+        # Find out the months for greatest pnl changes in the date list
+        if (monthly_change > greatest_increase):
+            greatest_increase = monthly_change
+            greatest_increase_month = mm_yy[month]
+        elif (monthly_change < greatest_decrease):
+            greatest_decrease = monthly_change
+            greatest_decrease_month = mm_yy[month]
+
+    # Calculate the average pnl change
+    average_pnl_change =  round(total_pnl_change/(total_months-1),2)
+
+   
+    #---------------------Print the summary------------------------------------------------------------ 
+    print(f'Financial Analysis')
+    print('----------------------------------')
+    print(f'Total Months: {str(total_months)}') 
+    print (f'Total: ${int(total_pnl)}')
+    print (f'Average Change: ${average_pnl_change}')
+    print(f'Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})')
+    print(f'Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})')  
 
 
-         # Find out the greatese decrease
-        greatest_decrease = pnl_list[0]
-        for month in range (total_months):
-            if (pnl_change[month+1] < greatest_decrease):
-                greatest_decrease = pnl_change[month+1]
+#-------------------------Create text file export------------------------------------------------------
+# Set variable for output text file
+output_summary_file = os.path.join("output_budget_summary.txt")
 
-        greatest_decrease_month = pnl_change.index(greatest_decrease)   
-        
-        print(f'Greatest Decrease in Profits: {mm_yy[greatest_decrease_month]} {greatest_decrease}')      
+#  Open the output file
+with open(output_summary_file, "w", newline="") as datafile:
+
+# Write the header row
+    datafile.write('Financial Analysis')
+
+# Write in summary rows
+    datafile.write(f'\n------------------------------------------------')   
+    datafile.write(f'\nTotal Months: {str(total_months)}')    
+    datafile.write(f'\nTotal: ${int(total_pnl)}')
+    datafile.write(f'\nAverage Change: ${average_pnl_change}')   
+    datafile.write(f'\nGreatest Increase in Profits: {greatest_increase_month} (${greatest_increase})')
+    datafile.write(f'\nGreatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})')         
