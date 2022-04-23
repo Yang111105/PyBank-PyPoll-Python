@@ -1,6 +1,4 @@
-# python-challenge
-
-HW#3-PyBank/PyPoll
+# python-PyBank/PyPoll
 
 *PyBank: The scrip reads budget data csv file and stores monthly pnl into lists to calculate average pnl and monthly changes. It then loops through the result to identify the months with biggest changes. The summary is both printed to the terminal and exported as a text file.
 
